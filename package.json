@@ -1,0 +1,28 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/choikc1999/BLOG.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "choikc1999",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/choikc1999/BLOG/issues"
+  },
+  "homepage": "https://github.com/choikc1999/BLOG#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
