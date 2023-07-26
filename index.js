@@ -9,8 +9,7 @@ app.use(express.static("uploads"));
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// const router = require("./routes");
-// app.use("/", router);
+
 
 app.use(express.static(__dirname + "/src"));
 
@@ -24,7 +23,7 @@ app.use(express.static(__dirname + "/src"));
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/src/index.html");
     console.log('로그인폼')
-  });
+  }); 
 
 app.get("/joinform",(req,res)=>{
     res.sendFile(__dirname +'/src/joinForm.html')
@@ -46,3 +45,5 @@ app.get("/permuteform", (req,res)=>{
     console.log("The server is listening on port 8080");
   }); 
   
+  const router = require("./routes");
+app.use("/", router); 
