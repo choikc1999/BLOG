@@ -12,6 +12,11 @@ exports.post_user = (req, res) => {
     });
 }
 
+//login화면
+exports.login = (req, res) => {
+    res.render("login");
+}
+
 // 회원가입 화면
 exports.join = (req, res) => {
     res.render("join");

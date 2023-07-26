@@ -45,5 +45,5 @@ app.get("/permuteform", (req,res)=>{
     console.log("The server is listening on port 8080");
   }); 
   
-  const router = require("./routes");
+const router = require("./routes");
 app.use("/", router); 
