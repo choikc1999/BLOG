@@ -4,6 +4,14 @@ const app = express();
 const port = 8080;
 const bodyParser = require("body-parser");
 
+app.set("view engine", "ejs");
+app.use(express.static("uploads"));
+app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+// const router = require("./routes");
+// app.use("/", router);
+
 app.use(express.static(__dirname + "/src"));
 
 // app.get("사용할 도메인",(req,res)){
@@ -14,12 +22,23 @@ app.use(express.static(__dirname + "/src"));
     // res.sendFile(__dirname+"index.html")
 // }
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/src/index.html");
+    console.log('로그인폼')
   });
 
 app.get("/joinform",(req,res)=>{
-    res.sendFile(__dirname + '/joinForm.html')
+    res.sendFile(__dirname +'/src/joinForm.html')
     console.log('회원가입폼')
+})
+
+app.get("/adminform",(req,res)=>{
+  res.sendFile(__dirname +'/src/adminForm.html')
+  console.log('회원폼')
+})
+
+app.get("/permuteform", (req,res)=>{
+  res.sendFile(__dirname + '/src/permuteForm.html')
+  console.log('회원정보수정폼')
 })
   
   app.listen(port, (err) => {

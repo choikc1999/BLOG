@@ -13,7 +13,7 @@
         </div>
         <div>
             <label>생년월일</label>
-            <input type="date" name="birthday">
+            <input type="date" name="birthday" value="2000-01-01" min="1800-01-01" max="2023-01-01">
         </div>
         <div>
             <label>성별</label>
@@ -31,6 +31,18 @@
         <div>
             <label>전화번호</label>
             <input type="text" name="phone">
+        </div>
+        <div>
+            <label>아이디</label>
+            <input type="text" name="JoinID">
+        </div>
+        <div>
+            <label>비밀번호</label>
+            <input type="password" name="JoinPassword">
+        </div>
+        <div>
+            <label>비밀번호확인</label>
+            <input type="password" name="reJoinPassword">
         </div>
         <button type="submit">회원가입</button>
         <button type="button" onclick="location.href='./index.html'">로그인하기</button>
