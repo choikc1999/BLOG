@@ -9,7 +9,6 @@
     <form>
         <div>
             <label>이름<input type="text" name="name" id="name"></label>
-            <button type="button" onclick="id_check();">중복확인</button>
         </div>
         <div>
             <label>
@@ -81,20 +80,25 @@
                 <input type="tel" name="phoneNumber" id="phoneNumber">ex "-"없이 숫자만 입력
             </label>
         </div>
-        <!-- 여기까지했음 -->
         <div>
-            <label>아이디</label>
-            <input type="text" name="JoinID">
+            <label>
+                아이디<input type="text" name="id" id="id">
+            </label>
+            <button type="button" onclick="id_check();">중복확인</button>
         </div>
         <div>
-            <label>비밀번호</label>
-            <input type="password" name="JoinPassword">
+            <label>
+                비밀번호
+                <input type="password" name="password" id="password" placeholder="영문자+숫자+특수문자 조합">
+            </label>
         </div>
         <div>
-            <label>비밀번호확인</label>
-            <input type="password" name="reJoinPassword">
+            <label>
+                비밀번호 재확인
+                <input type="password" name="passwordcheck" id="passwordcheck">
+            </label>
         </div>
-        <button type="submit">회원가입</button>
+        <button type="button" onclick="joinform_check();">회원가입</button>
         <button type="button" onclick="location.href='./index.html'">로그인하기</button>
     </form>
 </body>

@@ -1,12 +1,12 @@
-function joinUser() {
+function joinform_check() {
     var id = document.getElementById("id");
     var name = document.getElementById("name");
     var email = document.getElementById("email");
     var phoneNumber = get.getElementById("phoneNumber");
     var password = document.getElementById("password");
-    var birthday = document.getElementById("birthday");
-    var gender = document.getElementById("gender");
-    var address = document.getElementById("address");
+    //var birthday = document.getElementById("birthday");
+    //var gender = document.getElementById("gender");
+    //var address = document.getElementById("address");
     var passwordcheck = document.getElementById("passwordcheck");
     var female = document.getElementById("female");
     var male = document.getElementById("male");
@@ -24,9 +24,9 @@ function joinUser() {
     };
 
     // 비밀번호 영문자+숫자+특수조합(8~25자리 입력) 정규식
-    var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    var passwordcheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
-    if (!pwdCheck.test(password.value)){
+    if (!passwordcheck.test(password.value)){
         alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
         password.focus();
         return false;
