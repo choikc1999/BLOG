@@ -6,7 +6,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>Document</title>
     <style>
-        .error {
+        /* 에러메세지 css */
+        .error { 
             color: #f00;
             font-size: 12px;
         }
@@ -46,8 +47,8 @@
                 const email = $("#email").val();
                 const phoneNumber = $("#phoneNumber").val();
 
-
-                const idRegex = /^[a-z0-9]{6,10}$/;
+                // match = 조건값과 입력값이 동일한지 확인 후 작동하는 메서드
+                const idRegex = /^[a-z0-9]{6,10}$/;  //정규식
                 if (id && !id.match(idRegex)) {
                     showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
                 }
