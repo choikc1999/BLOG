@@ -1,3 +1,5 @@
+const joinForm = require("../src/joinForm.html");
+
 function joinform_check() {
     var id = document.getElementById("id");
     var name = document.getElementById("name");
