@@ -1,101 +1,124 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLOG</title>
-    <script src="./views/join.js"></script>
-</head>
-<body>
-    <form>
-        <div>
-            <label>이름<input type="text" name="name" id="name"></label>
-        </div>
-        <div>
-            <label>
-                생년월일
-                <input type="text" name="yy" id="yy" placeholder="년(4자)" maxlength="4">
-                <select name="mm" id="mm">
-                    <option value="">월</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
-            </label>
-            <input type="text" name="dd" id="dd" placeholder="일" maxlength="2">
-        </div>
-        <div>
-            <!-- radio버튼을 둘 중의 하나만 선택하려면 name값을 같게 줘야함
-            radio 버튼은 db저장과 상관이 없으면 value="" 따로 값을 넣어서 db값이 전송된다.
-            radio 버튼은 id값을 하나만 설정이 가능하므로 radio 경우만 id값을 다르게 설정 -->
-                <label>성별 <input type="radio" name="gender" value="M" id="male" />남 <input type="radio" name="gender" value="F" id="female" />여 </label>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Document</title>
+    <style>
+        .error {
+            color: #f00;
+            font-size: 12px;
+        }
+    </style>
+    </head>
+    <body>
+        <form id="registrationForm" method="signup">
+            <div>
+                <label>아이디<input type="text" name="id" id="id" /></label>
+                <span id="idError" class="error"></span>
             </div>
             <div>
-                <label>
-                    주소
-                    <input type="text" name="postal_code" id="postal_code" />
-                </label>
-                <button type="button" onclick="search_address();">검색</button>
+                <label>비밀번호<input type="password" name="password" id="password" /></label>
+                <span id="passwordError" class="error"></span>
             </div>
             <div>
-                <label>
-                    기본주소
-                    <input type="text" name="addr1" id="addr1" size="30" />
-                </label>
+                <label>이름<input type="text" name="name" id="name" /></label>
+                <span id="nameError" class="error"></span>
             </div>
             <div>
-                <label>
-                    상세주소
-                    <input type="text" name="addr2" id="addr2" size="30" />
-                </label>
+                <label>이메일<input type="text" name="email" id="email" /></label>
+                <span id="emailError" class="error"></span>
             </div>
             <div>
-                <label>
-                    이메일
-                    <input type="text" name="email" id="email" />@
-                </label>
-                <input type="text" name="email_add" id="email_add" />
-                <select name="email_sel" id="email_sel" onchange="change_email();">
-                    <!-- onchage: select 안에 있는 옵션들의 값이 바뀌었을때 명령을 실행 -->
-                    <option value="">직접입력</option>
-                    <option value="naver.com">naver.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="nate.com">nate.com</option>
-                </select>
+                <label>전화번호<input type="tel" name="phoneNumber" id="phoneNumber" /></label>
+                <span id="phoneNumberError" class="error"></span>
             </div>
-            <div>
-                <label>
-                    전화번호
-                    <input type="tel" name="phoneNumber" id="phoneNumber" />ex "-"없이 숫자만 입력
-                </label>
-            </div>
-            <div>
-                <label> 아이디<input type="text" name="id" id="id" /> </label>
-                <button type="button" onclick="id_check();">중복확인</button>
-            </div>
-            <div>
-                <label>
-                    비밀번호
-                    <input type="password" name="password" id="password" placeholder="영문자+숫자+특수문자 조합" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    비밀번호 재확인
-                    <input type="password" name="passwordcheck" id="passwordcheck" />
-                </label>
-            </div>
-            <button type="button" onclick="joinform_check();">회원가입</button>
-            <button type="button" onclick="location.href='./index.html'">로그인하기</button>
+            <button type="submit">회원가입</button>
         </form>
+        <script>
+            $("#registrationForm").submit(function(e){
+                event.preventDefault();
+
+                const id = $("#id").val(); // 여기서 val()은 인풋의 입력값
+                const password = $("#password").val();
+                const name = $("#name").val();
+                const email = $("#email").val();
+                const phoneNumber = $("#phoneNumber").val();
+
+
+                const idRegex = /^[a-z0-9]{6,10}$/;
+                if (!id.match(idRegex)) {
+                    showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
+                }
+
+                // 비밀번호 유효성 검사
+                const passwordRegex = /^(?=.[a-zA-Z])(?=.\d)(?=.*[@!#$%^&*])[a-zA-Z\d@!#$%^&*]{10,20}$/;
+                if (!password.match(passwordRegex)) {
+                    showError("passwordError", "비밀번호는 10자에서 20자의 영문 대소문자, 숫자, 특수문자 조합이어야 합니다.");
+                }
+
+                // 이름 유효성 검사
+                const nameRegex = /^[a-zA-Z가-힣]{2,6}$/;
+                if (!name.match(nameRegex)) {
+                    showError("nameError", "이름은 2자에서 6자의 한글 또는 영문(대,소문자)만 가능합니다.");
+                }
+
+                // 이메일 유효성 검사
+                const emailRegex = /^[a-z0-9]+@[a-z0-9]+.[a-z]+$/;
+                if (!email.match(emailRegex) || emailDomain === '') {
+                    showError("emailError", "이메일 형식이 올바르지 않습니다.");
+                }
+
+                // 전화번호 유효성 검사 (하이픈 자동 입력)
+                const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+                if (!phoneNumber.match(phoneNumberRegex)) {
+                    showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+                }
+            });
+            function showError(elenentID, errorMessage){
+                    $("#" + elenentID).text(errorMessage);
+            }
+
+            $("#id, #password, #name, #email, #phoneNumber").on("input", function(){
+                const id = $("#id").val(); // 여기서 val()은 인풋의 입력값
+                const password = $("#password").val();
+                const name = $("#name").val();
+                const email = $("#email").val();
+                const phoneNumber = $("#phoneNumber").val();
+
+                //오류메시지 초기화
+                $(".error").text("");
+
+                const idRegex = /^[a-z0-9]{6,10}$/;
+                if (!id.match(idRegex)) {
+                    showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
+                }
+
+                // 비밀번호 유효성 검사
+                const passwordRegex = /^(?=.[a-zA-Z])(?=.\d)(?=.*[@!#$%^&*])[a-zA-Z\d@!#$%^&*]{10,20}$/;
+                if (!password.match(passwordRegex)) {
+                    showError("passwordError", "비밀번호는 10자에서 20자의 영문 대소문자, 숫자, 특수문자 조합이어야 합니다.");
+                }
+
+                // 이름 유효성 검사
+                const nameRegex = /^[a-zA-Z가-힣]{2,6}$/;
+                if (!name.match(nameRegex)) {
+                    showError("nameError", "이름은 2자에서 6자의 한글 또는 영문(대,소문자)만 가능합니다.");
+                }
+
+                // 이메일 유효성 검사
+                const emailRegex = /^[a-z0-9]+@[a-z0-9]+.[a-z]+$/;
+                if (!email.match(emailRegex) || emailDomain === '') {
+                    showError("emailError", "이메일 형식이 올바르지 않습니다.");
+                }
+
+                // 전화번호 유효성 검사 (하이픈 자동 입력)
+                const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+                if (!phoneNumber.match(phoneNumberRegex)) {
+                    showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+                }
+            });
+        </script>        
     </body>
 </html>
