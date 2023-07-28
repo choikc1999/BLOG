@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+<<<<<<< HEAD
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,6 +36,43 @@
             </div>
             <div>
                 <!-- radio버튼을 둘 중의 하나만 선택하려면 name값을 같게 줘야함
+=======
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG</title>
+    <script src="./views/join.js"></script>
+</head>
+<body>
+    <form>
+        <div>
+            <label>이름<input type="text" name="name" id="name"></label>
+        </div>
+        <div>
+            <label>
+                생년월일
+                <input type="text" name="yy" id="yy" placeholder="년(4자)" maxlength="4">
+                <select name="mm" id="mm">
+                    <option value="">월</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </label>
+            <input type="text" name="dd" id="dd" placeholder="일" maxlength="2">
+        </div>
+        <div>
+            <!-- radio버튼을 둘 중의 하나만 선택하려면 name값을 같게 줘야함
+>>>>>>> 1d87bfb60ec0ba16e05b723a1e9508318b9628db
             radio 버튼은 db저장과 상관이 없으면 value="" 따로 값을 넣어서 db값이 전송된다.
             radio 버튼은 id값을 하나만 설정이 가능하므로 radio 경우만 id값을 다르게 설정 -->
                 <label>성별 <input type="radio" name="gender" value="M" id="male" />남 <input type="radio" name="gender" value="F" id="female" />여 </label>
