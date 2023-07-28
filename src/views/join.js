@@ -2,7 +2,7 @@ function joinform_check() {
     var id = document.getElementById("id");
     var name = document.getElementById("name");
     var email = document.getElementById("email");
-    var phoneNumber = get.getElementById("phoneNumber");
+    var phoneNumber = document.getElementById("phoneNumber");
     var password = document.getElementById("password");
     //var birthday = document.getElementById("birthday");
     //var gender = document.getElementById("gender");
