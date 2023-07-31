@@ -19,12 +19,13 @@ app.set("view", path.join(__dirname), "views");
 // Routes
 app.get("/", userController.index);
 app.post("/user", userController.post_user);
-app.get("/login", userController.login);
-app.get("/join", userController.join);
-app.post("/login", userController.post_login);
-app.post("/edit", userController.edit);
-app.patch("/user", userController.patch_user);
-app.delete("/user", userController.delete_user);
+//app.get("/login", userController.login);
+//app.get("/join", userController.join);
+//app.post("/login", userController.post_login);
+//app.post("/edit", userController.edit);
+//app.patch("/user", userController.patch_user);
+//app.delete("/user", userController.delete_user);
+app.post("/user/check_duplicate_id", userController.checkDuplicateId); // 중복검사를 하는 경로설정
 
 const PORT = 3000;
 app.listen(PORT, () => {
