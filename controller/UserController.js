@@ -7,10 +7,23 @@ exports.index = (req, res) => {
 
 // user 정보 저장하기
 exports.post_user = (req, res) => {
-    User.insert(req.body, function (result){
-        res.send({id: result});
+    const userData = req.body;
+
+    User.insert(userData, function (err, result) {
+        // 에러가 뜰경우 res.status는 코드번호 500 의 에러를 내보낼것이다 , 에러내용은 대충이렇다.
+        if (err) {
+            console.error("UserController - Error inserting user data", err);
+            if (err === "Duplicate ID"){
+                return res.status(400).json({ error: "Duplicate ID. Please choose a different ID" });
+            }else{
+                console.error("Error saving user data to MySQL", err);
+                return res.status(500).json({error: "Error saving user data to the database"})
+            }
+        }
+        // 에러가 아닐경우엔 res.status는 코드번호 200 이라는 result 값을 내보낼것이다.
+        return res.status(200).json({ id: result });
     });
-}
+};
 
 //login화면
 exports.login = (req, res) => {
@@ -24,6 +37,7 @@ exports.join = (req, res) => {
 
 // 로그인 시도
 exports.post_login = (req, res) => {
+    // req.body = 유저가 작성한 input value
     User.select(req.body.id, req.body.password, function(result){
         if(result === null) {
             alert("아이디, 비밀번호를 확인해주세요.");

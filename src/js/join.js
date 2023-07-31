@@ -1,0 +1,228 @@
+$("#registrationForm").submit(function(e){
+    event.preventDefault(); // event.preventDefault = a태그나 submit태그 클릭시 창이 리프레시되는 현상을 막기 위해 사용
+
+    const id = $("#id").val(); // 여기서 val()은 인풋의 입력값
+    const password = $("#password").val();
+    const name = $("#name").val();
+    const email = $("#email").val();
+    const phoneNumber = $("#phoneNumber").val();
+    const emailDomain = getEmailDomain(email);
+
+    // 유효성 검사 (정규식)
+    const idRegex = /^[a-z0-9]{6,10}$/; //아이디
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#\$%\^&\*])[a-zA-Z\d@!#\$%\^&\*]{10,20}$/; //비밀번호
+    const nameRegex = /^[a-zA-Z가-힣]{2,6}$/; //이름
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\.[a-z]+$/; //이메일
+    const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/; //전화번호
+
+    // match = 조건값과 입력값이 동일한지 확인 후 작동하는 메서드
+    if (id && !id.match(idRegex)) {
+        showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
+        return;
+    }
+
+    // 비밀번호 유효성 검사
+    if (password && !password.match(passwordRegex)) {
+        showError("passwordError", "비밀번호는 10자에서 20자의 영문 대소문자, 숫자, 특수문자 조합이어야 합니다.");
+        return;
+    }
+
+    // 이름 유효성 검사
+    if (name && !name.match(nameRegex)) {
+        showError("nameError", "이름은 2자에서 6자의 한글 또는 영문(대,소문자)만 가능합니다.");
+        return;
+    }
+
+    // 이메일 유효성 검사
+    if ((email && !email.match(emailRegex))) {
+        showError("emailError", "이메일 형식이 올바르지 않습니다.");
+        return;
+    }
+
+    // 전화번호 유효성 검사 (하이픈 자동 입력)
+    if (phoneNumber && !phoneNumber.match(phoneNumberRegex)) {
+        showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+        return;
+    }
+    // 유효성 검사 통과 시 user 객체 생성
+    const userData = {
+        id: id,
+        password: password,
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+    }
+    // user data send
+    // ajax는 원래 모듈로 사용해야하는데 jquery에 포함되어있어서 바로 사용가능. 
+    $.ajax({
+        url: "user",
+        type: "POST",
+        data: userData,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log("Error: ", error);
+        },
+    });
+ // 유효성 검사 종료 
+    
+});
+function showError(elenentID, errorMessage){
+        $("#" + elenentID).text(errorMessage);
+}
+
+$("#id, #password, #name, #email, #phoneNumber").on("input", function(){
+    const id = $("#id").val(); // 여기서 val()은 인풋의 입력값
+    const password = $("#password").val();
+    const name = $("#name").val();
+    const email = $("#email").val();
+    const phoneNumber = $("#phoneNumber").val();
+
+    //오류메시지 초기화
+    $(".error").text("");
+
+    const idRegex = /^[a-z0-9]{6,10}$/;
+    if (id && !id.match(idRegex)) {
+        showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
+        return;
+    }
+
+    // 비밀번호 유효성 검사
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#\$%\^&\*])[a-zA-Z\d@!#\$%\^&\*]{10,20}$/;
+    if (password && !password.match(passwordRegex)) {
+        showError("passwordError", "비밀번호는 10자에서 20자의 영문 대소문자, 숫자, 특수문자 조합이어야 합니다.");
+        return;
+    }
+
+    // 이름 유효성 검사
+    const nameRegex = /^[a-zA-Z가-힣]{2,6}$/;
+    if (name && !name.match(nameRegex)) {
+        showError("nameError", "이름은 2자에서 6자의 한글 또는 영문(대,소문자)만 가능합니다.");
+        return;
+    }
+
+    // 이메일 유효성 검사
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\.[a-z]+$/;
+    if ((email && !email.match(emailRegex))) {
+        showError("emailError", "이메일 형식이 올바르지 않습니다.");
+        return;
+    }
+
+    // 전화번호 유효성 검사
+    const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+    if (phoneNumber && !phoneNumber.match(phoneNumberRegex)) {
+        showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+        return;
+    }
+});
+// 전화번호에 하이폰 자동입력
+$("#phoneNumber").on("input", function(){
+    const phoneNumber = $("#phoneNumber")
+    .val()
+    .replace(/(\d{3})(\d{4,4})\d{0,4}/, "$1-$2-");
+    
+    $("#phoneNumber").val(phoneNumber);
+});
+
+// 이메일 양식 자동완성기능
+function getEmailDomain(email){
+    const atIndex = email.indexOf("@");
+    if (atIndex !== -1) {
+        return email.slice(atIndex + 1);
+    }
+    return "";     
+}
+$("#email").on("input", function(){
+  const emailValue = $(this).val();
+  const atIndex = emailValue.indexOf("@");
+  if (atIndex !== -1){
+    const domain = emailValue.slice(atIndex + 1);
+    const domains = ["naver.com", "kakao.com", "google.com"];
+    const matchedDomains = domains.filter((d) => d.startsWith(domain));
+    if (matchedDomains.length > 0) {
+        showEmailDropdown(matchedDomains);
+    }else {
+        hideEmailDropdown();
+    }
+  } else {
+    hideEmailDropdown();
+  } 
+});
+
+// email dorpdown menu
+function showEmailDropdown(matchedDomains){
+    const dorpdown = $("#emailDropdown");
+    dorpdown.empty();
+    for(const domain of matchedDomains){
+        const item = $("<div>").addClass("dropdown-item").text(domain);
+        item.on("click", function(){
+            const emailValue = $("#email").val();
+            const atIndex = emailValue.indexOf("@");
+            if(atIndex !== -1){
+            const username = emailValue.slice(0, atIndex);
+            $("#email").val(username + "@" + domain);
+            hideEmailDropdown();
+            }
+        });
+        dorpdown.append(item);
+    }
+    dorpdown.show();
+
+    // 키보드 이벤트 리스너 추가
+    // 크롬자동완성과 겹쳐서 미작동
+    dorpdown.off("keydown").on("keydown", function(e){
+        const items = $(this).find(".active");
+        const activeItem = $(this).find(".active");
+        if (e.key === "ArrowDown" || e.key === "Tab"){
+            e.preventDefault();
+            if (activeItem.length){
+                const nextItem = activeItem.next();
+                if(nextItem.length){
+                    activeItem.removeClass("active");
+                    nextItem.addClass("active");
+                }
+            }else {
+                items.first().addClass("active");
+            }
+        }else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (activeItem.length) {
+                const prevItem = activeItem.prev();
+                if(prevItem.length) {
+                    activeItem.removeClass("active");
+                    prevItem.addClass("active");
+                }
+            }else {
+                items.last().addClass("active");
+            }
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (activeItem.length) {
+                const emailValue = $("#email").val();
+                const atIndex = emailValue.indexOf("@");
+                if (atIndex !== -1) {
+                    const username = emailValue.slice(0, atIndex);
+                    $("#email").val(username + "@" + activeItem.text());
+                    hideEmailDropdown();
+                }
+            }
+        }else if (e.key === "Escape") {
+            e.preventDefault();
+            hideEmailDropdown();
+        }
+        e.stopPropagation();
+    });
+}
+//
+
+function hideEmailDropdown() {
+    $("#emailDropdown").empty().hide();
+}
+
+// Enter evenet 잠금기능
+$("#registrationForm").on("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+    }
+});
