@@ -65,7 +65,7 @@ $("#id").on("focusout", function (){
         const phoneNumber = $(this).val();
         const phoneNumberRegex = /^\d{3}-\d{3,4}-\d{4}$/;
         if (!phoneNumber.match(phoneNumberRegex)) {
-            showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+            showError("phoneNumberError", "전화번호는 숫자만 입력 가능합니다.");
         } else {
             showError("phoneNumber", "", false);
         }
@@ -266,7 +266,7 @@ $("#registrationForm").submit(function(e){
 
     // 전화번호 유효성 검사 (하이픈 자동 입력)
     if (phoneNumber && !phoneNumber.match(phoneNumberRegex)) {
-        showError("phoneNumberError", "전화번호는 숫자만 입력하고 하이픈(-)을 포함해야 합니다.");
+        showError("phoneNumberError", "전화번호는 숫자만 입력 가능합니다.");
         return;
     }
     // 유효성 검사 통과 시 user 객체 생성
