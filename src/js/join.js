@@ -16,8 +16,7 @@ $("#id").on("focusout", function (){
                     if (data.isDuplicate) {
                         showError("idError", "이미 사용 중인 아이디입니다", true);
                     } else {
-                        showError("idError", "사용 가능한 아이디입니다.", false);
-                        $("#registrationForm")[0].submit();
+                        showError("idError","",false);
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -223,7 +222,7 @@ $("#registrationForm").submit(function(e){
 
     // match = 조건값과 입력값이 동일한지 확인 후 작동하는 메서드
     // 아이디 유효성 검사
-    if (id && !id.match(idRegex)) {
+    if (!id.match(idRegex)) {
         showError("idError", "아이디는 6자에서 10자의 영문 소문자와 숫자만 가능합니다.");
         return;
     }
@@ -290,6 +289,29 @@ $("#registrationForm").submit(function(e){
         error: function (error) {
             console.log("Error: ", error);
         },
+    }); 
+}); // 유효성 검사 종료
+
+// css
+$(document).ready(function(){
+    $(".input1").click(function(e){
+        $(".lb_h").css("color","#ccc");
+        $(".lb_h1").css("color","#333");
     });
- // 유효성 검사 종료 
+    $(".input2").click(function(e){
+        $(".lb_h").css("color","#ccc");
+        $(".lb_h2").css("color","#333");
+    });
+    $(".input3").click(function(e){
+        $(".lb_h").css("color","#ccc");
+        $(".lb_h3").css("color","#333");
+    });
+    $(".input4").click(function(e){
+        $(".lb_h").css("color","#ccc");
+        $(".lb_h4").css("color","#333");
+    });
+    $(".input5").click(function(e){
+        $(".lb_h").css("color","#ccc");
+        $(".lb_h5").css("color","#333");
+    });
 });
